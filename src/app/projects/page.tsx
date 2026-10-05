@@ -4,6 +4,7 @@ import ProjectCard from "@/components/ProjectCard";
 import SectionTitle from "@/components/SectionTitle";
 import Link from "next/link";
 import { Filter, Building2 } from "lucide-react";
+import YearFilterSelect from "@/components/YearFilterSelect";
 
 export const metadata: Metadata = {
   title: "Portofolio Proyek Konstruksi & Infrastruktur Nasional",
@@ -18,7 +19,7 @@ interface Props {
 export default async function ProjectsPage({ searchParams }: Props) {
   const { category, year } = await searchParams;
 
-  const whereClause: any = {};
+  const whereClause: Parameters<typeof prisma.project.findMany>[0]["where"] = {};
   if (category && category !== "all") {
     whereClause.category = category;
   }
@@ -51,9 +52,6 @@ export default async function ProjectsPage({ searchParams }: Props) {
       <div className="bg-[#07101E] text-white py-16 sm:py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-20" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <span className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-amber-500/10 text-amber-400 border border-amber-500/20 mb-3">
-            Rekam Jejak Karya
-          </span>
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight">
             Portofolio Proyek Terpercaya
           </h1>
@@ -65,11 +63,11 @@ export default async function ProjectsPage({ searchParams }: Props) {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16">
-        {/* Filter Controls Bar */}
-        <div className="bg-slate-50 p-4 sm:p-6 rounded-2xl border border-slate-200/90 mb-10 flex flex-col md:flex-row justify-between items-center gap-4">
+        {/* Filter Controls Bar (Integrated with Bottom Border Divider) */}
+        <div className="pb-6 mb-10 border-b border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center space-x-2 text-slate-700 text-xs font-bold uppercase tracking-wider">
-            <Filter className="w-4 h-4 text-amber-500" />
-            <span>Filter Berdasarkan Kategori:</span>
+            <Filter className="w-4 h-4 text-[#FF5E14]" />
+            <span>Filter Kategori:</span>
           </div>
 
           <div className="flex flex-wrap gap-2 items-center justify-center">
@@ -78,7 +76,7 @@ export default async function ProjectsPage({ searchParams }: Props) {
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
                 !category || category === "all"
                   ? "bg-slate-900 text-white"
-                  : "bg-white text-slate-700 hover:bg-slate-200 border border-slate-200"
+                  : "bg-slate-100 text-slate-700 hover:bg-slate-200"
               }`}
             >
               Semua Kategori
@@ -92,7 +90,7 @@ export default async function ProjectsPage({ searchParams }: Props) {
                 className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
                   category === cat
                     ? "bg-slate-900 text-white"
-                    : "bg-white text-slate-700 hover:bg-slate-200 border border-slate-200"
+                    : "bg-slate-100 text-slate-700 hover:bg-slate-200"
                 }`}
               >
                 {cat}
@@ -101,34 +99,11 @@ export default async function ProjectsPage({ searchParams }: Props) {
           </div>
 
           {/* Year Filter Dropdown */}
-          <div className="flex items-center space-x-2 text-xs font-medium">
-            <span className="text-slate-500">Tahun:</span>
-            <div className="flex gap-1.5">
-              <Link
-                href={`/projects${category ? `?category=${category}` : ""}`}
-                className={`px-2.5 py-1 rounded text-xs font-bold ${
-                  !year || year === "all"
-                    ? "bg-amber-500 text-slate-950 font-bold"
-                    : "bg-white border text-slate-600"
-                }`}
-              >
-                Semua
-              </Link>
-              {years.map((y) => (
-                <Link
-                  key={y}
-                  href={`/projects?year=${y}${category ? `&category=${category}` : ""}`}
-                  className={`px-2.5 py-1 rounded text-xs font-bold ${
-                    year === y.toString()
-                      ? "bg-amber-500 text-slate-950"
-                      : "bg-white border text-slate-600 hover:bg-slate-100"
-                  }`}
-                >
-                  {y}
-                </Link>
-              ))}
-            </div>
-          </div>
+          <YearFilterSelect
+            years={years}
+            currentYear={year}
+            currentCategory={category}
+          />
         </div>
 
         {/* Project Results */}

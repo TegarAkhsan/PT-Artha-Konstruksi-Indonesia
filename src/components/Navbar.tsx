@@ -20,11 +20,6 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
-  // If in admin route, Navbar is hidden
-  if (pathname.startsWith("/admin")) {
-    return null;
-  }
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -32,6 +27,11 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // If in admin route, Navbar is hidden
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
 
   const navLinks = [
     { name: "Beranda", href: "/" },
@@ -41,7 +41,6 @@ export default function Navbar() {
     { name: "Sertifikasi", href: "/certifications" },
     { name: "Berita", href: "/news" },
     { name: "Karir", href: "/careers" },
-    { name: "Kontak", href: "/contact" },
   ];
 
   return (
@@ -105,14 +104,14 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav Links */}
-          <div className="hidden lg:flex items-center space-x-1 xl:space-x-2 py-3">
+          <div className="hidden xl:flex items-center space-x-1 2xl:space-x-2 py-3">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`px-3 py-2 text-sm font-bold uppercase tracking-wider transition-all duration-200 ${
+                  className={`px-2.5 2xl:px-3 py-2 text-xs 2xl:text-sm font-bold uppercase tracking-wider transition-all duration-200 whitespace-nowrap ${
                     isActive
                       ? "text-[#FF5E14] border-b-2 border-[#FF5E14]"
                       : "text-slate-800 hover:text-[#FF5E14]"
@@ -124,19 +123,27 @@ export default function Navbar() {
             })}
           </div>
 
-          {/* Action Button */}
-          <div className="hidden md:flex items-center space-x-3 py-3">
+          {/* Action Button: Konsultasikan Proyek */}
+          <div className="hidden sm:flex items-center space-x-3 py-3">
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center px-5 py-2.5 text-xs font-black uppercase tracking-wider text-white bg-[#0B1528] hover:bg-[#162A45] rounded-none shadow-sm transition-all duration-200 active:scale-95"
+              className={`inline-flex items-center justify-center px-4 xl:px-5 py-2.5 text-xs font-black uppercase tracking-wider text-white rounded-none shadow-sm transition-all duration-200 active:scale-95 whitespace-nowrap ${
+                pathname === "/contact"
+                  ? "bg-[#FF5E14] hover:bg-[#E24E09]"
+                  : "bg-[#0B1528] hover:bg-[#162A45]"
+              }`}
             >
-              <span>Konsultasi Proyek</span>
-              <ChevronRight className="w-4 h-4 ml-1 text-[#FF5E14]" />
+              <span>Konsultasikan Proyek</span>
+              <ChevronRight
+                className={`w-4 h-4 ml-1 ${
+                  pathname === "/contact" ? "text-white" : "text-[#FF5E14]"
+                }`}
+              />
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="lg:hidden flex items-center py-3">
+          {/* Mobile & Tablet Menu Button */}
+          <div className="xl:hidden flex items-center py-3">
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 rounded-none text-slate-700 hover:text-[#FF5E14] hover:bg-slate-100 focus:outline-none"
@@ -173,7 +180,7 @@ export default function Navbar() {
                 onClick={() => setIsOpen(false)}
                 className="w-full text-center px-4 py-3 text-xs font-black uppercase tracking-wider text-white bg-[#FF5E14] hover:bg-[#E24E09] shadow-md"
               >
-                Konsultasi Proyek
+                Konsultasikan Proyek
               </Link>
               <Link
                 href="/admin/login"

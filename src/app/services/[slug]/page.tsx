@@ -13,6 +13,13 @@ import {
 } from "lucide-react";
 import ProjectCard from "@/components/ProjectCard";
 
+export const revalidate = 60;
+
+export async function generateStaticParams() {
+  const services = await prisma.service.findMany({ select: { slug: true } });
+  return services.map((s) => ({ slug: s.slug }));
+}
+
 interface Props {
   params: Promise<{ slug: string }>;
 }

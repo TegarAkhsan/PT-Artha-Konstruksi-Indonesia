@@ -26,21 +26,22 @@ interface ServiceCardProps {
 export default function ServiceCard({ service }: ServiceCardProps) {
   // Map icon name string to Lucide component
   const getIcon = (iconName?: string | null) => {
+    const iconClass = "w-6 h-6 text-[#FF5E14] group-hover:text-white transition-colors duration-300";
     switch (iconName) {
       case "Building2":
-        return <Building2 className="w-6 h-6 text-amber-500" />;
+        return <Building2 className={iconClass} />;
       case "Factory":
-        return <Factory className="w-6 h-6 text-amber-500" />;
+        return <Factory className={iconClass} />;
       case "Truck":
-        return <Truck className="w-6 h-6 text-amber-500" />;
+        return <Truck className={iconClass} />;
       case "DraftingCompass":
-        return <DraftingCompass className="w-6 h-6 text-amber-500" />;
+        return <DraftingCompass className={iconClass} />;
       case "Cpu":
-        return <Cpu className="w-6 h-6 text-amber-500" />;
+        return <Cpu className={iconClass} />;
       case "ClipboardCheck":
-        return <ClipboardCheck className="w-6 h-6 text-amber-500" />;
+        return <ClipboardCheck className={iconClass} />;
       default:
-        return <HardHat className="w-6 h-6 text-amber-500" />;
+        return <HardHat className={iconClass} />;
     }
   };
 
@@ -57,10 +58,8 @@ export default function ServiceCard({ service }: ServiceCardProps) {
       <div className="p-6 sm:p-7 flex-1 flex flex-col">
         {/* Category badge & Icon */}
         <div className="flex justify-between items-start mb-5">
-          <div className="w-12 h-12 rounded-xl bg-amber-50 border border-amber-200/60 flex items-center justify-center group-hover:bg-amber-500 group-hover:border-amber-500 transition-colors duration-300">
-            <span className="group-hover:text-slate-950 transition-colors">
-              {getIcon(service.icon)}
-            </span>
+          <div className="w-12 h-12 rounded-xl bg-amber-50 border border-amber-200/60 flex items-center justify-center group-hover:bg-[#FF5E14] group-hover:border-[#FF5E14] transition-colors duration-300">
+            {getIcon(service.icon)}
           </div>
           <span className="inline-block px-2.5 py-1 rounded text-[11px] font-bold uppercase tracking-wider bg-slate-100 text-slate-700">
             {service.category}

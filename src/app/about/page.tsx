@@ -20,6 +20,8 @@ export const metadata: Metadata = {
     "Mengenal lebih dekat PT Artha Konstruksi Indonesia, sejarah perjalanan, visi & misi, nilai-nilai inti korporat, serta profil dewan direksi dan manajemen eksekutif.",
 };
 
+export const revalidate = 60;
+
 export default async function AboutPage() {
   const profile = await prisma.companyProfile.findUnique({
     where: { id: "default" },
@@ -95,9 +97,6 @@ export default async function AboutPage() {
       <div className="bg-[#07101E] text-white py-16 sm:py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-20" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <span className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-amber-500/10 text-amber-400 border border-amber-500/20 mb-3">
-            Profil Korporat
-          </span>
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight">
             Tentang PT Artha Konstruksi Indonesia
           </h1>
@@ -145,11 +144,11 @@ export default async function AboutPage() {
           </div>
 
           <div className="relative">
-            <div className="rounded-2xl overflow-hidden shadow-2xl border-4 border-slate-100">
+            <div className="rounded-2xl overflow-hidden shadow-2xl border-4 border-slate-100 bg-slate-900">
               <img
-                src="https://images.unsplash.com/photo-1541888946425-d0fbb186156f?q=80&w=1000&auto=format&fit=crop"
-                alt="Artha Konstruksi Headquarters and Project"
-                className="w-full h-[450px] object-cover"
+                src="/images/hero-girder.jpg"
+                alt="Artha Konstruksi Engineering and Construction"
+                className="w-full h-[450px] object-cover object-center"
               />
             </div>
           </div>
@@ -158,62 +157,64 @@ export default async function AboutPage() {
         {/* Vision & Mission Section */}
         <div id="vision" className="my-24 py-16 bg-slate-50 rounded-3xl p-8 sm:p-12 border border-slate-200">
           <SectionTitle
-            badge="Arah Strategis Perusahaan"
             title="Visi, Misi & Nilai-Nilai Inti (Core Values)"
             subtitle="Landasan fundamental yang memandu setiap keputusan rekayasa teknik dan operasional lapangan kami."
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            {/* Vision */}
-            <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600 mb-6">
-                  <Eye className="w-6 h-6" />
+          {/* Vision & Mission Unified Section with Divider */}
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-200">
+              {/* Vision */}
+              <div className="p-8 sm:p-10 flex flex-col justify-between">
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600 mb-6">
+                    <Eye className="w-6 h-6" />
+                  </div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-amber-600 block mb-2">
+                    Visi Perusahaan
+                  </span>
+                  <h3 className="text-xl font-bold text-slate-900 mb-4">
+                    Menjadi Perusahaan Konstruksi & Rekayasa Teknik Terkemuka di Asia Tenggara
+                  </h3>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    Diakui secara luas atas keunggulan kualitas rekayasa struktur, ketepatan waktu,
+                    keselamatan kerja tanpa cela, dan kepeloporan penerapan teknologi konstruksi
+                    berkelanjutan yang ramah lingkungan.
+                  </p>
                 </div>
-                <span className="text-xs font-bold uppercase tracking-wider text-amber-600 block mb-2">
-                  Visi Perusahaan
-                </span>
-                <h3 className="text-xl font-bold text-slate-900 mb-4">
-                  Menjadi Perusahaan Konstruksi & Rekayasa Teknik Terkemuka di Asia Tenggara
-                </h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  Diakui secara luas atas keunggulan kualitas rekayasa struktur, ketepatan waktu,
-                  keselamatan kerja tanpa cela, dan kepeloporan penerapan teknologi konstruksi
-                  berkelanjutan yang ramah lingkungan.
-                </p>
               </div>
-            </div>
 
-            {/* Mission */}
-            <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600 mb-6">
-                  <Target className="w-6 h-6" />
+              {/* Mission */}
+              <div className="p-8 sm:p-10 flex flex-col justify-between">
+                <div>
+                  <div className="w-12 h-12 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600 mb-6">
+                    <Target className="w-6 h-6" />
+                  </div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-amber-600 block mb-2">
+                    Misi Perusahaan
+                  </span>
+                  <h3 className="text-xl font-bold text-slate-900 mb-4">
+                    Memberikan Nilai Tambah Tertinggi bagi Klien & Bangsa
+                  </h3>
+                  <ul className="space-y-3 text-xs sm:text-sm text-slate-600">
+                    <li className="flex items-start">
+                      <CheckCircle2 className="w-4 h-4 text-amber-500 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Menghadirkan hasil konstruksi berkualitas unggul sesuai spesifikasi teknis dan standar SNI/internasional.</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircle2 className="w-4 h-4 text-amber-500 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Menerapkan standar K3L (Keselamatan, Kesehatan Kerja dan Lingkungan) tertinggi tanpa kompromi.</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircle2 className="w-4 h-4 text-amber-500 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Mengoptimalkan integrasi teknologi digital (BIM 5D) untuk efisiensi jadwal dan transparansi biaya.</span>
+                    </li>
+                    <li className="flex items-start">
+                      <CheckCircle2 className="w-4 h-4 text-amber-500 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Membangun SDM insinyur dan tenaga kerja konstruksi lokal yang berdaya saing global.</span>
+                    </li>
+                  </ul>
                 </div>
-                <span className="text-xs font-bold uppercase tracking-wider text-amber-600 block mb-2">
-                  Misi Perusahaan
-                </span>
-                <h3 className="text-xl font-bold text-slate-900 mb-4">
-                  Memberikan Nilai Tambah Tertinggi bagi Klien & Bangsa
-                </h3>
-                <ul className="space-y-3 text-xs sm:text-sm text-slate-600">
-                  <li className="flex items-start">
-                    <CheckCircle2 className="w-4 h-4 text-amber-500 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Menghadirkan hasil konstruksi berkualitas unggul sesuai spesifikasi teknis dan standar SNI/internasional.</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle2 className="w-4 h-4 text-amber-500 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Menerapkan standar K3L (Keselamatan, Kesehatan Kerja dan Lingkungan) tertinggi tanpa kompromi.</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle2 className="w-4 h-4 text-amber-500 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Mengoptimalkan integrasi teknologi digital (BIM 5D) untuk efisiensi jadwal dan transparansi biaya.</span>
-                  </li>
-                  <li className="flex items-start">
-                    <CheckCircle2 className="w-4 h-4 text-amber-500 mr-2 mt-0.5 flex-shrink-0" />
-                    <span>Membangun SDM insinyur dan tenaga kerja konstruksi lokal yang berdaya saing global.</span>
-                  </li>
-                </ul>
               </div>
             </div>
           </div>
@@ -270,62 +271,65 @@ export default async function AboutPage() {
         {/* Board of Directors / Management Profiles */}
         <div id="directors" className="my-24">
           <SectionTitle
-            badge="Kepemimpinan Korporat"
             title="Dewan Direksi & Manajemen Eksekutif"
             subtitle="Dipimpin oleh para profesional dan insinyur senior yang memiliki rekam jejak puluhan tahun dalam memimpin proyek strategis di Indonesia."
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {directors.map((director, idx) => (
-              <div
-                key={idx}
-                className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col sm:flex-row gap-6"
-              >
-                <div className="w-full sm:w-44 h-48 sm:h-auto rounded-xl overflow-hidden bg-slate-100 flex-shrink-0">
-                  <img
-                    src={director.photo}
-                    alt={director.name}
-                    className="w-full h-full object-cover object-top"
-                  />
-                </div>
-                <div className="flex-1 flex flex-col justify-between">
-                  <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-amber-600 block mb-1">
-                      {director.position}
-                    </span>
-                    <h3 className="text-lg font-bold text-slate-900">
-                      {director.name}
-                    </h3>
-                    <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                      {director.bio}
-                    </p>
+          {/* Unified Board of Directors with Dividers */}
+          <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-200">
+              {directors.map((director, idx) => (
+                <div
+                  key={idx}
+                  className={`p-6 sm:p-8 flex flex-col sm:flex-row gap-6 ${
+                    idx >= 2 ? "md:border-t md:border-slate-200" : ""
+                  }`}
+                >
+                  <div className="w-full sm:w-40 h-48 sm:h-auto rounded-xl overflow-hidden bg-slate-100 flex-shrink-0">
+                    <img
+                      src={director.photo}
+                      alt={director.name}
+                      className="w-full h-full object-cover object-top"
+                    />
                   </div>
+                  <div className="flex-1 flex flex-col justify-between">
+                    <div>
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-amber-600 block mb-1">
+                        {director.position}
+                      </span>
+                      <h3 className="text-lg font-bold text-slate-900">
+                        {director.name}
+                      </h3>
+                      <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        {director.bio}
+                      </p>
+                    </div>
 
-                  <div className="mt-4 pt-3 border-t border-slate-100">
-                    <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">
-                      Kualifikasi & Sertifikasi:
-                    </span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {director.credentials.map((cred, cIdx) => (
-                        <span
-                          key={cIdx}
-                          className="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-700"
-                        >
-                          {cred}
-                        </span>
-                      ))}
+                    <div className="mt-4 pt-3 border-t border-slate-100">
+                      <span className="text-[10px] uppercase font-bold text-slate-400 block mb-1.5">
+                        Kualifikasi & Sertifikasi:
+                      </span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {director.credentials.map((cred, cIdx) => (
+                          <span
+                            key={cIdx}
+                            className="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-700"
+                          >
+                            {cred}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 
         {/* Company Milestones (History) */}
         <div className="my-24">
           <SectionTitle
-            badge="Jejak Langkah"
             title="Sejarah Perjalanan & Perkembangan Perusahaan"
             subtitle="Pertumbuhan konsisten dari kontraktor spesialis hingga menjadi mitra konstruksi umum skala nasional."
           />

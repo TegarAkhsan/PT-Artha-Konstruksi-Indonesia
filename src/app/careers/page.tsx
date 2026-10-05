@@ -20,6 +20,8 @@ export const metadata: Metadata = {
     "Bergabunglah bersama PT Artha Konstruksi Indonesia. Temukan peluang karir untuk posisi Project Manager, Site Engineer, Ahli K3, Estimator, dan BIM Modeler.",
 };
 
+export const revalidate = 60;
+
 export default async function CareersPage() {
   const careers = await prisma.career.findMany({
     where: { isActive: true },
@@ -47,47 +49,7 @@ export default async function CareersPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-20">
-        {/* Culture & Benefits Pillars */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200">
-            <div className="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center mb-4">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
-            <h3 className="text-base font-bold text-slate-900">
-              Lingkungan Kerja Aman (Zero Accident)
-            </h3>
-            <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
-              Keselamatan setiap personil adalah prioritas mutlak dengan penyediaan APD
-              standar tertinggi, asuransi komprehensif, dan prosedur K3 internasional.
-            </p>
-          </div>
 
-          <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200">
-            <div className="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center mb-4">
-              <GraduationCap className="w-6 h-6" />
-            </div>
-            <h3 className="text-base font-bold text-slate-900">
-              Pelatihan & Sertifikasi Berkelanjutan
-            </h3>
-            <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
-              Dukungan penuh untuk peningkatan jenjang sertifikasi profesi (SKA LPJK,
-              Autodesk BIM Certified, dan pelatihan kepemimpinan proyek).
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200">
-            <div className="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-4">
-              <Briefcase className="w-6 h-6" />
-            </div>
-            <h3 className="text-base font-bold text-slate-900">
-              Kompensasi & Jenjang Karir Jelas
-            </h3>
-            <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
-              Paket remunerasi kompetitif, bonus kinerja proyek, dan peluang akselerasi
-              menuju posisi Site Manager hingga Project Director.
-            </p>
-          </div>
-        </div>
 
         {/* Vacancies Section */}
         <div>

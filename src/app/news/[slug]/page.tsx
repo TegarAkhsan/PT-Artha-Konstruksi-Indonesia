@@ -4,6 +4,16 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { Calendar, User, ArrowLeft, ArrowRight, Tag, Share2 } from "lucide-react";
 
+export const revalidate = 60;
+
+export async function generateStaticParams() {
+  const articles = await prisma.article.findMany({
+    where: { isPublished: true },
+    select: { slug: true },
+  });
+  return articles.map((a) => ({ slug: a.slug }));
+}
+
 interface Props {
   params: Promise<{ slug: string }>;
 }

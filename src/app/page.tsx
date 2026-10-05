@@ -148,9 +148,9 @@ export default async function HomePage() {
 
             {/* Content Column */}
             <div className="space-y-6">
-              <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-100 text-amber-800 border border-amber-300">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#FF5E14] block">
                 Tentang PT Artha Konstruksi Indonesia
-              </div>
+              </span>
 
               <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 leading-tight">
                 Integritas Tanpa Kompromi, Presisi Rekayasa Kelas Dunia
@@ -236,7 +236,6 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle
             watermark="SERVICES"
-            badge="Bidang Keahlian Kami"
             title="Layanan Terintegrasi Sektor Konstruksi & Engineering"
             subtitle="Kami menyediakan portofolio layanan komprehensif mulai dari pelaksanaan konstruksi sipil, rekayasa mekanikal-elektrikal, hingga supervisi proyek skala besar."
           />
@@ -266,7 +265,6 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTitle
             watermark="PROJECTS"
-            badge="Portofolio Terpilih"
             title="Karya Konstruksi Landmark & Proyek Strategis"
             subtitle="Bukti nyata komitmen kualitas dan ketepatan pelaksanaan pekerjaan yang dipercayakan oleh klien korporat dan instansi nasional."
             theme="dark"
@@ -320,24 +318,54 @@ export default async function HomePage() {
       </section>
 
       {/* =========================================================================
-          CLIENT & PARTNER LOGOS
+          CLIENT & PARTNER LOGOS (Continuous Infinite Marquee: Right to Left)
       ========================================================================= */}
-      <section className="py-16 bg-white border-y border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-xs font-bold uppercase tracking-widest text-slate-400 mb-8">
+      <section className="py-12 bg-slate-50/60 border-y border-slate-200/80 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+          <p className="text-center text-xs font-bold uppercase tracking-widest text-slate-400">
             Dipercaya Oleh Pengembang Terkemuka, Perusahaan Multinasional, & BUMN
           </p>
+        </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-6 items-center">
+        {/* Marquee Track with Smooth Left & Right Gradient Fades */}
+        <div className="relative w-full overflow-hidden mask-fade-edges">
+          {/* Left Fade Overlay */}
+          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none" />
+          {/* Right Fade Overlay */}
+          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none" />
+
+          <div className="animate-marquee flex items-center gap-6 py-2">
+            {/* First Set of Logos */}
             {clients.map((client) => (
               <div
-                key={client.id}
-                className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex flex-col items-center justify-center text-center hover:border-amber-400 transition-colors h-24"
+                key={`client-a-${client.id}`}
+                className="flex-shrink-0 w-52 h-20 px-5 bg-white rounded-xl border border-slate-200/90 shadow-xs flex items-center space-x-3 hover:border-amber-400 hover:shadow-md transition-all duration-300 group cursor-pointer"
               >
-                <Building2 className="w-6 h-6 text-slate-400 mb-1" />
-                <span className="text-[11px] font-bold text-slate-700 leading-tight line-clamp-2">
-                  {client.name}
-                </span>
+                <div className="w-10 h-10 rounded-lg bg-amber-50 group-hover:bg-[#FF5E14] text-[#FF5E14] group-hover:text-white flex items-center justify-center transition-colors flex-shrink-0">
+                  <Building2 className="w-5 h-5 stroke-[2.2]" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <span className="text-xs font-bold text-slate-800 group-hover:text-[#FF5E14] leading-snug line-clamp-2 transition-colors">
+                    {client.name}
+                  </span>
+                </div>
+              </div>
+            ))}
+
+            {/* Second Set of Logos (Duplicate for seamless loop) */}
+            {clients.map((client) => (
+              <div
+                key={`client-b-${client.id}`}
+                className="flex-shrink-0 w-52 h-20 px-5 bg-white rounded-xl border border-slate-200/90 shadow-xs flex items-center space-x-3 hover:border-amber-400 hover:shadow-md transition-all duration-300 group cursor-pointer"
+              >
+                <div className="w-10 h-10 rounded-lg bg-amber-50 group-hover:bg-[#FF5E14] text-[#FF5E14] group-hover:text-white flex items-center justify-center transition-colors flex-shrink-0">
+                  <Building2 className="w-5 h-5 stroke-[2.2]" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <span className="text-xs font-bold text-slate-800 group-hover:text-[#FF5E14] leading-snug line-clamp-2 transition-colors">
+                    {client.name}
+                  </span>
+                </div>
               </div>
             ))}
           </div>

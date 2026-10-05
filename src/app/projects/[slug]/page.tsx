@@ -14,6 +14,13 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
+export const revalidate = 60;
+
+export async function generateStaticParams() {
+  const projects = await prisma.project.findMany({ select: { slug: true } });
+  return projects.map((p) => ({ slug: p.slug }));
+}
+
 interface Props {
   params: Promise<{ slug: string }>;
 }
@@ -67,39 +74,9 @@ export default async function ProjectDetailPage({ params }: Props) {
             </Link>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 mb-4">
-            <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/30">
-              {project.category}
-            </span>
-            <span
-              className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
-                isOngoing
-                  ? "bg-amber-500 text-slate-950"
-                  : "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
-              }`}
-            >
-              {project.status === "Completed" ? "Proyek Selesai" : "Sedang Berjalan"}
-            </span>
-          </div>
-
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight max-w-4xl">
             {project.title}
           </h1>
-
-          <div className="mt-6 flex flex-wrap items-center gap-6 text-xs sm:text-sm text-slate-300">
-            <span className="flex items-center">
-              <Building className="w-4 h-4 text-amber-400 mr-2" />
-              <span>Klien: {project.client}</span>
-            </span>
-            <span className="flex items-center">
-              <MapPin className="w-4 h-4 text-amber-400 mr-2" />
-              <span>Lokasi: {project.location}</span>
-            </span>
-            <span className="flex items-center">
-              <Calendar className="w-4 h-4 text-amber-400 mr-2" />
-              <span>Tahun Konstruksi: {project.year}</span>
-            </span>
-          </div>
         </div>
       </div>
 

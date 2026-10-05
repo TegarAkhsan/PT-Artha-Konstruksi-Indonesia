@@ -427,7 +427,7 @@ async function main() {
       category: "CSR",
       excerpt: "Mendukung peningkatan kompetensi tenaga kerja konstruksi lokal melalui program pelatihan intensif pembesian, perancah, dan keselamatan kerja bersertifikat BNSP.",
       content: `Sebagai wujud tanggung jawab sosial perusahaan (CSR) yang berkelanjutan, PT Artha Konstruksi Indonesia secara rutin menggelar pelatihan vokasi teknik dan sertifikasi gratis bagi tenaga kerja lokal di sekitar area proyek.\n\nSebanyak 120 tenaga kerja telah lulus uji kompetensi Badan Nasional Sertifikasi Profesi (BNSP) untuk bidang pemasangan perancah (scaffolding), pembesian struktur beton, dan juru ukur (surveyor).\n\nLangkah ini sejalan dengan misi perusahaan untuk tidak hanya membangun infrastruktur fisik, tetapi juga membangun kemandirian ekonomi dan keahlian sumber daya manusia Indonesia yang berdaya saing tinggi.`,
-      thumbnail: "https://images.unsplash.com/photo-1541888946425-d0fbb186156f?q=80&w=1200&auto=format&fit=crop",
+      thumbnail: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=1200&auto=format&fit=crop",
       author: "Departemen Hubungan Komunitas & CSR",
       publishedAt: new Date("2024-11-10"),
       isPublished: true,

@@ -18,6 +18,8 @@ export const metadata: Metadata = {
     "Hubungi kantor pusat PT Artha Konstruksi Indonesia di SCBD Jakarta Selatan untuk konsultasi proyek gedung, fasilitas pabrik industri, infrastruktur, atau kemitraan bisnis.",
 };
 
+export const revalidate = 60;
+
 export default async function ContactPage() {
   const profile = await prisma.companyProfile.findUnique({
     where: { id: "default" },
@@ -29,9 +31,6 @@ export default async function ContactPage() {
       <div className="bg-[#07101E] text-white py-16 sm:py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-20" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <span className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-amber-500/10 text-amber-400 border border-amber-500/20 mb-3">
-            Komunikasi & Kemitraan
-          </span>
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight">
             Hubungi PT Artha Konstruksi Indonesia
           </h1>
