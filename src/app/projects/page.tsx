@@ -1,4 +1,5 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import ProjectCard from "@/components/ProjectCard";
 import SectionTitle from "@/components/SectionTitle";
@@ -19,7 +20,7 @@ interface Props {
 export default async function ProjectsPage({ searchParams }: Props) {
   const { category, year } = await searchParams;
 
-  const whereClause: Parameters<typeof prisma.project.findMany>[0]["where"] = {};
+  const whereClause: Prisma.ProjectWhereInput = {};
   if (category && category !== "all") {
     whereClause.category = category;
   }
