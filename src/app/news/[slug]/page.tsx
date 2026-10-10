@@ -1,16 +1,14 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
+import {
+  getArticles,
+  getArticleBySlug,
+} from "@/data/companyData";
 import { Calendar, User, ArrowLeft, ArrowRight, Tag, Share2 } from "lucide-react";
 
-export const revalidate = 60;
-
-export async function generateStaticParams() {
-  const articles = await prisma.article.findMany({
-    where: { isPublished: true },
-    select: { slug: true },
-  });
+export function generateStaticParams() {
+  const articles = getArticles();
   return articles.map((a) => ({ slug: a.slug }));
 }
 
@@ -20,9 +18,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const article = await prisma.article.findUnique({
-    where: { slug },
-  });
+  const article = getArticleBySlug(slug);
 
   if (!article) {
     return { title: "Berita Tidak Ditemukan" };
@@ -41,19 +37,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function NewsDetailPage({ params }: Props) {
   const { slug } = await params;
-  const article = await prisma.article.findUnique({
-    where: { slug },
-  });
+  const article = getArticleBySlug(slug);
 
   if (!article) {
     notFound();
   }
 
-  const relatedArticles = await prisma.article.findMany({
-    where: { NOT: { id: article.id } },
-    take: 2,
-    orderBy: { publishedAt: "desc" },
-  });
+  const relatedArticles = getArticles()
+    .filter((a) => a.id !== article.id)
+    .slice(0, 2);
 
   const keywords = article.seoKeywords
     ? article.seoKeywords.split(",").map((k) => k.trim())

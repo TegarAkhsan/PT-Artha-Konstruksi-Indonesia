@@ -12,7 +12,6 @@ import {
   X,
   ChevronRight,
   ShieldCheck,
-  Lock,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -27,11 +26,6 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // If in admin route, Navbar is hidden
-  if (pathname.startsWith("/admin")) {
-    return null;
-  }
 
   const navLinks = [
     { name: "Beranda", href: "/" },
@@ -66,14 +60,6 @@ export default function Navbar() {
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
               <span className="font-medium">ISO 9001 | 14001 | 45001</span>
             </span>
-            <span className="text-slate-300">|</span>
-            <Link
-              href="/admin/login"
-              className="flex items-center space-x-1.5 text-slate-500 hover:text-[#FF5E14] transition-colors font-medium"
-            >
-              <Lock className="w-3 h-3" />
-              <span>Portal Admin</span>
-            </Link>
           </div>
         </div>
       </div>
@@ -181,14 +167,6 @@ export default function Navbar() {
                 className="w-full text-center px-4 py-3 text-xs font-black uppercase tracking-wider text-white bg-[#FF5E14] hover:bg-[#E24E09] shadow-md"
               >
                 Konsultasikan Proyek
-              </Link>
-              <Link
-                href="/admin/login"
-                onClick={() => setIsOpen(false)}
-                className="w-full text-center px-4 py-2 text-xs text-slate-500 hover:text-[#FF5E14] flex items-center justify-center space-x-1"
-              >
-                <Lock className="w-3.5 h-3.5" />
-                <span>Portal Login Admin</span>
               </Link>
             </div>
           </div>

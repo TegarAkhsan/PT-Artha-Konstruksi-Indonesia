@@ -26,39 +26,14 @@ export default function CareerApplyModal({ career }: CareerApplyModalProps) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("loading");
     setErrorMessage("");
 
-    try {
-      const res = await fetch("/api/careers/apply", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          careerId: career.id,
-          ...formData,
-        }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.message || "Gagal mengirimkan lamaran.");
-      }
-
+    setTimeout(() => {
       setStatus("success");
-      setFormData({
-        fullName: "",
-        email: "",
-        phone: "",
-        cvFileUrl: "",
-        portfolioUrl: "",
-        notes: "",
-      });
-    } catch (err: any) {
-      setStatus("error");
-      setErrorMessage(err.message || "Terjadi kesalahan koneksi.");
-    }
+    }, 400);
   };
 
   return (

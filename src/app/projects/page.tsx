@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
-import { Prisma } from "@prisma/client";
-import { prisma } from "@/lib/prisma";
+import {
+  getProjects,
+  getProjectCategories,
+  getProjectYears,
+} from "@/data/companyData";
 import ProjectCard from "@/components/ProjectCard";
 import SectionTitle from "@/components/SectionTitle";
 import Link from "next/link";
@@ -20,32 +23,10 @@ interface Props {
 export default async function ProjectsPage({ searchParams }: Props) {
   const { category, year } = await searchParams;
 
-  const whereClause: Prisma.ProjectWhereInput = {};
-  if (category && category !== "all") {
-    whereClause.category = category;
-  }
-  if (year && year !== "all") {
-    whereClause.year = parseInt(year, 10);
-  }
-
-  const [projects, categoriesRaw, yearsRaw] = await Promise.all([
-    prisma.project.findMany({
-      where: whereClause,
-      orderBy: { year: "desc" },
-    }),
-    prisma.project.findMany({
-      select: { category: true },
-      distinct: ["category"],
-    }),
-    prisma.project.findMany({
-      select: { year: true },
-      distinct: ["year"],
-      orderBy: { year: "desc" },
-    }),
-  ]);
-
-  const categories = categoriesRaw.map((c) => c.category);
-  const years = yearsRaw.map((y) => y.year);
+  const parsedYear = year && year !== "all" ? parseInt(year, 10) : undefined;
+  const projects = getProjects({ category, year: parsedYear });
+  const categories = getProjectCategories();
+  const years = getProjectYears();
 
   return (
     <div className="pt-24 pb-20 bg-white">

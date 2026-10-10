@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { prisma } from "@/lib/prisma";
+import { getCompanyProfile } from "@/data/companyData";
 import {
   Building2,
   ShieldCheck,
@@ -20,12 +20,8 @@ export const metadata: Metadata = {
     "Mengenal lebih dekat PT Artha Konstruksi Indonesia, sejarah perjalanan, visi & misi, nilai-nilai inti korporat, serta profil dewan direksi dan manajemen eksekutif.",
 };
 
-export const revalidate = 60;
-
-export default async function AboutPage() {
-  const profile = await prisma.companyProfile.findUnique({
-    where: { id: "default" },
-  });
+export default function AboutPage() {
+  const profile = getCompanyProfile();
 
   const directors = [
     {

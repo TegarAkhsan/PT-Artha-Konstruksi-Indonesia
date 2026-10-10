@@ -1,5 +1,12 @@
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
+import {
+  getCompanyProfile,
+  getServices,
+  getFeaturedProjects,
+  getCertifications,
+  getClientPartners,
+  getArticles,
+} from "@/data/companyData";
 import {
   Building2,
   ShieldCheck,
@@ -21,26 +28,13 @@ import CertModal from "@/components/CertModal";
 import SectionTitle from "@/components/SectionTitle";
 import HeroSlider from "@/components/HeroSlider";
 
-export const revalidate = 60; // ISR 60 seconds
-
-export default async function HomePage() {
-  const [profile, services, featuredProjects, certs, clients, articles] =
-    await Promise.all([
-      prisma.companyProfile.findUnique({ where: { id: "default" } }),
-      prisma.service.findMany({ orderBy: { order: "asc" } }),
-      prisma.project.findMany({
-        where: { featured: true },
-        take: 6,
-        orderBy: { year: "desc" },
-      }),
-      prisma.certification.findMany({ take: 4, orderBy: { order: "asc" } }),
-      prisma.clientPartner.findMany({ orderBy: { order: "asc" } }),
-      prisma.article.findMany({
-        take: 3,
-        where: { isPublished: true },
-        orderBy: { publishedAt: "desc" },
-      }),
-    ]);
+export default function HomePage() {
+  const profile = getCompanyProfile();
+  const services = getServices();
+  const featuredProjects = getFeaturedProjects(6);
+  const certs = getCertifications().slice(0, 4);
+  const clients = getClientPartners();
+  const articles = getArticles(3);
 
   return (
     <div className="flex flex-col min-h-screen bg-white">

@@ -13,13 +13,6 @@ import {
 } from "lucide-react";
 
 export default function Footer() {
-  const pathname = usePathname();
-
-  // Hide in admin portal
-  if (pathname.startsWith("/admin")) {
-    return null;
-  }
-
   return (
     <footer className="bg-[#07101E] text-slate-300 pt-16 pb-12 border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -270,9 +263,7 @@ export default function Footer() {
             <span>•</span>
             <span>Syarat & Ketentuan Tender</span>
             <span>•</span>
-            <Link href="/admin/login" className="hover:text-amber-400">
-              Akses Karyawan
-            </Link>
+            <span>Standar K3 & Lingkungan</span>
           </div>
         </div>
       </div>

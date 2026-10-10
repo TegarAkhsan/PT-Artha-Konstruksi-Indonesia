@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { prisma } from "@/lib/prisma";
+import { getCertifications } from "@/data/companyData";
 import CertModal from "@/components/CertModal";
 import SectionTitle from "@/components/SectionTitle";
 import { ShieldCheck, Award, FileCheck2, HardHat } from "lucide-react";
@@ -10,12 +10,8 @@ export const metadata: Metadata = {
     "Legalitas badan usaha jasa pelaksana konstruksi kualifikasi B2, sertifikasi ISO 9001, 14001, 45001, dan penghargaan Zero Accident Kemenaker RI.",
 };
 
-export const revalidate = 60;
-
-export default async function CertificationsPage() {
-  const certs = await prisma.certification.findMany({
-    orderBy: { order: "asc" },
-  });
+export default function CertificationsPage() {
+  const certs = getCertifications();
 
   return (
     <div className="pt-24 pb-20 bg-white">

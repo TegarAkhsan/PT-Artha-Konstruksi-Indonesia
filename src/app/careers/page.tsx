@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { prisma } from "@/lib/prisma";
+import { getCareers } from "@/data/companyData";
 import Link from "next/link";
 import {
   Briefcase,
@@ -20,13 +20,8 @@ export const metadata: Metadata = {
     "Bergabunglah bersama PT Artha Konstruksi Indonesia. Temukan peluang karir untuk posisi Project Manager, Site Engineer, Ahli K3, Estimator, dan BIM Modeler.",
 };
 
-export const revalidate = 60;
-
-export default async function CareersPage() {
-  const careers = await prisma.career.findMany({
-    where: { isActive: true },
-    orderBy: { createdAt: "desc" },
-  });
+export default function CareersPage() {
+  const careers = getCareers();
 
   return (
     <div className="pt-24 pb-20 bg-white">

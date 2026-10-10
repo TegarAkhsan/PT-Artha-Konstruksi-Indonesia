@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { prisma } from "@/lib/prisma";
+import { getServices } from "@/data/companyData";
 import ServiceCard from "@/components/ServiceCard";
 import SectionTitle from "@/components/SectionTitle";
 import Link from "next/link";
@@ -11,12 +11,8 @@ export const metadata: Metadata = {
     "Solusi layanan terintegrasi PT Artha Konstruksi Indonesia meliputi konstruksi gedung, kawasan industri, infrastruktur, civil engineering, mekanikal elektrikal, dan manajemen konstruksi.",
 };
 
-export const revalidate = 60;
-
-export default async function ServicesPage() {
-  const services = await prisma.service.findMany({
-    orderBy: { order: "asc" },
-  });
+export default function ServicesPage() {
+  const services = getServices();
 
   // Group by category
   const constructionServices = services.filter((s) => s.category === "Construction");

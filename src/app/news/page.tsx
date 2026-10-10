@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { prisma } from "@/lib/prisma";
+import { getArticles } from "@/data/companyData";
 import Link from "next/link";
 import { Calendar, User, ArrowRight, Newspaper } from "lucide-react";
 import SectionTitle from "@/components/SectionTitle";
@@ -10,13 +10,8 @@ export const metadata: Metadata = {
     "Informasi resmi seputar pencapaian perusahaan, pembaruan progres proyek konstruksi, inovasi teknologi rekayasa teknik, dan program CSR PT Artha Konstruksi Indonesia.",
 };
 
-export const revalidate = 60;
-
-export default async function NewsPage() {
-  const articles = await prisma.article.findMany({
-    where: { isPublished: true },
-    orderBy: { publishedAt: "desc" },
-  });
+export default function NewsPage() {
+  const articles = getArticles();
 
   return (
     <div className="pt-24 pb-20 bg-white">

@@ -1,7 +1,11 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
+import {
+  getServices,
+  getServiceBySlug,
+  getProjects,
+} from "@/data/companyData";
 import {
   CheckCircle2,
   ArrowLeft,
@@ -13,10 +17,8 @@ import {
 } from "lucide-react";
 import ProjectCard from "@/components/ProjectCard";
 
-export const revalidate = 60;
-
-export async function generateStaticParams() {
-  const services = await prisma.service.findMany({ select: { slug: true } });
+export function generateStaticParams() {
+  const services = getServices();
   return services.map((s) => ({ slug: s.slug }));
 }
 
@@ -26,9 +28,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const service = await prisma.service.findUnique({
-    where: { slug },
-  });
+  const service = getServiceBySlug(slug);
 
   if (!service) {
     return { title: "Layanan Tidak Ditemukan" };
@@ -42,19 +42,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ServiceDetailPage({ params }: Props) {
   const { slug } = await params;
-  const service = await prisma.service.findUnique({
-    where: { slug },
-  });
+  const service = getServiceBySlug(slug);
 
   if (!service) {
     notFound();
   }
 
-  // Find related projects in similar category
-  const relatedProjects = await prisma.project.findMany({
-    take: 3,
-    orderBy: { year: "desc" },
-  });
+  // Find related projects
+  const relatedProjects = getProjects().slice(0, 3);
 
   const scopes = service.scopeOfWork
     .split("\n")

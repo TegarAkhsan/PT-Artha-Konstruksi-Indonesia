@@ -1,7 +1,10 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
+import {
+  getProjects,
+  getProjectBySlug,
+} from "@/data/companyData";
 import {
   MapPin,
   Calendar,
@@ -14,10 +17,8 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
-export const revalidate = 60;
-
-export async function generateStaticParams() {
-  const projects = await prisma.project.findMany({ select: { slug: true } });
+export function generateStaticParams() {
+  const projects = getProjects();
   return projects.map((p) => ({ slug: p.slug }));
 }
 
@@ -27,9 +28,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const project = await prisma.project.findUnique({
-    where: { slug },
-  });
+  const project = getProjectBySlug(slug);
 
   if (!project) {
     return { title: "Proyek Tidak Ditemukan" };
@@ -43,10 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProjectDetailPage({ params }: Props) {
   const { slug } = await params;
-  const project = await prisma.project.findUnique({
-    where: { slug },
-    include: { gallery: { orderBy: { order: "asc" } } },
-  });
+  const project = getProjectBySlug(slug);
 
   if (!project) {
     notFound();

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { prisma } from "@/lib/prisma";
+import { getCompanyProfile } from "@/data/companyData";
 import InquiryForm from "@/components/InquiryForm";
 import SectionTitle from "@/components/SectionTitle";
 import {
@@ -18,12 +18,8 @@ export const metadata: Metadata = {
     "Hubungi kantor pusat PT Artha Konstruksi Indonesia di SCBD Jakarta Selatan untuk konsultasi proyek gedung, fasilitas pabrik industri, infrastruktur, atau kemitraan bisnis.",
 };
 
-export const revalidate = 60;
-
-export default async function ContactPage() {
-  const profile = await prisma.companyProfile.findUnique({
-    where: { id: "default" },
-  });
+export default function ContactPage() {
+  const profile = getCompanyProfile();
 
   return (
     <div className="pt-24 pb-20 bg-white">
